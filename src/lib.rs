@@ -13,9 +13,12 @@ compile_error!("there must be at least one archive file format feature");
 compile_error!("there must be only one bzip2 feature");
 
 mod archive;
+#[cfg(feature = "clap")]
+pub mod clap;
 mod entries;
 mod entry;
 mod error;
+pub mod support;
 
 pub use archive::Archive;
 pub use entries::Entries;
