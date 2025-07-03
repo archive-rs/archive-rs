@@ -22,7 +22,7 @@ pub enum Format {
     /// lz4-compressed tarball
     TarLz4,
 
-    #[cfg(all(feature = "tar", feature = "xz2"))]
+    #[cfg(all(feature = "tar", feature = "liblzma"))]
     /// xz-compressed tarball
     TarXz,
 
@@ -51,7 +51,7 @@ impl Format {
             #[cfg(all(feature = "tar", feature = "lz4"))]
             Self::TarLz4 => "TarLz4",
 
-            #[cfg(all(feature = "tar", feature = "xz2"))]
+            #[cfg(all(feature = "tar", feature = "liblzma"))]
             Self::TarXz => "TarXz",
 
             #[cfg(all(feature = "tar", feature = "zstd"))]
@@ -78,7 +78,7 @@ impl Format {
             #[cfg(all(feature = "tar", feature = "lz4"))]
             Self::TarLz4 => "lz4-compressed tarball",
 
-            #[cfg(all(feature = "tar", feature = "xz2"))]
+            #[cfg(all(feature = "tar", feature = "liblzma"))]
             Self::TarXz => "xz-compressed tarball",
 
             #[cfg(all(feature = "tar", feature = "zstd"))]
@@ -107,7 +107,7 @@ impl Format {
             #[cfg(all(feature = "tar", feature = "lz4"))]
             Self::TarLz4 => vec!["*.tar.lz4"],
 
-            #[cfg(all(feature = "tar", feature = "xz2"))]
+            #[cfg(all(feature = "tar", feature = "liblzma"))]
             Self::TarXz => vec!["*.tar.xz", "*.txz"],
 
             #[cfg(all(feature = "tar", feature = "zstd"))]
@@ -130,7 +130,7 @@ impl Format {
             Self::TarGzip,
             #[cfg(all(feature = "tar", feature = "lz4"))]
             Self::TarLz4,
-            #[cfg(all(feature = "tar", feature = "xz2"))]
+            #[cfg(all(feature = "tar", feature = "liblzma"))]
             Self::TarXz,
             #[cfg(all(feature = "tar", feature = "zstd"))]
             Self::TarZstd,
@@ -153,7 +153,7 @@ impl Format {
             Self::TarGzip.describe(),
             #[cfg(all(feature = "tar", feature = "lz4"))]
             Self::TarLz4.describe(),
-            #[cfg(all(feature = "tar", feature = "xz2"))]
+            #[cfg(all(feature = "tar", feature = "liblzma"))]
             Self::TarXz.describe(),
             #[cfg(all(feature = "tar", feature = "zstd"))]
             Self::TarZstd.describe(),

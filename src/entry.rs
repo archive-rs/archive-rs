@@ -12,10 +12,10 @@ use bzip2::read::BzDecoder as BzSysDecoder;
 use bzip2_rs::decoder::DecoderReader as BzNativeDecoder;
 #[cfg(feature = "flate2")]
 use flate2::read::GzDecoder;
+#[cfg(feature = "liblzma")]
+use liblzma::read::XzDecoder;
 #[cfg(feature = "lz4")]
 use lz4::Decoder as Lz4Decoder;
-#[cfg(feature = "xz2")]
-use xz2::read::XzDecoder;
 #[cfg(feature = "zstd")]
 use zstd::stream::read::Decoder as ZstdDecoder;
 
@@ -45,7 +45,7 @@ pub enum Entry<'a> {
     #[doc(hidden)]
     TarLz4(tar::Entry<'a, Lz4Decoder<File>>),
 
-    #[cfg(all(feature = "xz2", feature = "tar"))]
+    #[cfg(all(feature = "liblzma", feature = "tar"))]
     #[doc(hidden)]
     TarXz(tar::Entry<'a, XzDecoder<File>>),
 
@@ -77,7 +77,7 @@ impl Entry<'_> {
             #[cfg(all(feature = "lz4", feature = "tar"))]
             Self::TarLz4(entry) => entry.header().entry_type().into(),
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarXz(entry) => entry.header().entry_type().into(),
 
             #[cfg(all(feature = "zstd", feature = "tar"))]
@@ -104,7 +104,7 @@ impl Entry<'_> {
             #[cfg(all(feature = "lz4", feature = "tar"))]
             Self::TarLz4(entry) => entry.size(),
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarXz(entry) => entry.size(),
 
             #[cfg(all(feature = "zstd", feature = "tar"))]
@@ -134,7 +134,7 @@ impl Entry<'_> {
             #[cfg(all(feature = "lz4", feature = "tar"))]
             Self::TarLz4(entry) => entry.path().map_err(From::from),
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarXz(entry) => entry.path().map_err(From::from),
 
             #[cfg(all(feature = "zstd", feature = "tar"))]
@@ -164,7 +164,7 @@ impl Read for Entry<'_> {
             #[cfg(all(feature = "lz4", feature = "tar"))]
             Self::TarLz4(entry) => entry.read(buf),
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarXz(entry) => entry.read(buf),
 
             #[cfg(all(feature = "zstd", feature = "tar"))]

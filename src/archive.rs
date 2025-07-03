@@ -12,12 +12,12 @@ use bzip2::read::BzDecoder as BzSysDecoder;
 use bzip2_rs::decoder::DecoderReader as BzNativeDecoder;
 #[cfg(feature = "flate2")]
 use flate2::read::GzDecoder;
+#[cfg(feature = "liblzma")]
+use liblzma::read::XzDecoder;
 #[cfg(feature = "lz4")]
 use lz4::Decoder as Lz4Decoder;
 #[cfg(feature = "tar")]
 use tar::Archive as Tar;
-#[cfg(feature = "xz2")]
-use xz2::read::XzDecoder;
 #[cfg(feature = "zstd")]
 use zstd::stream::read::Decoder as ZstdDecoder;
 
@@ -50,7 +50,7 @@ pub enum Archive {
     #[doc(hidden)]
     TarLz4(Tar<Lz4Decoder<File>>),
 
-    #[cfg(all(feature = "xz2", feature = "tar"))]
+    #[cfg(all(feature = "liblzma", feature = "tar"))]
     #[doc(hidden)]
     TarXz(Tar<XzDecoder<File>>),
 
@@ -102,7 +102,7 @@ impl Archive {
                 Ok(Self::TarLz4(Tar::new(file)))
             }
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             ["txz", ..] | ["xz", "tar", ..] => {
                 let file = File::open(path)?;
                 let file = XzDecoder::new(file);

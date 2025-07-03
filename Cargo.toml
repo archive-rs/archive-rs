@@ -38,6 +38,10 @@ optional = true
 version = "1"
 optional = true
 
+[dependencies.liblzma]
+version = "0.4"
+optional = true
+
 [dependencies.lz4]
 version = "1"
 optional = true
@@ -46,16 +50,12 @@ optional = true
 version = "0.4"
 optional = true
 
-[dependencies.xz2]
-version = "0.1"
-optional = true
-
 [dependencies.zstd]
 version = "0.13"
 optional = true
 
 [features]
-default = ["bzip2", "flate2", "lz4", "tar", "xz2", "zstd"]
+default = ["bzip2", "flate2", "liblzma", "lz4", "tar", "zstd"]
 
 [[example]]
 name = "archive-ls"

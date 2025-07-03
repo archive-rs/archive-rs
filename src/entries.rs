@@ -9,10 +9,10 @@ use bzip2::read::BzDecoder as BzSysDecoder;
 use bzip2_rs::decoder::DecoderReader as BzNativeDecoder;
 #[cfg(feature = "flate2")]
 use flate2::read::GzDecoder;
+#[cfg(feature = "liblzma")]
+use liblzma::read::XzDecoder;
 #[cfg(feature = "lz4")]
 use lz4::Decoder as Lz4Decoder;
-#[cfg(feature = "xz2")]
-use xz2::read::XzDecoder;
 #[cfg(feature = "zstd")]
 use zstd::stream::read::Decoder as ZstdDecoder;
 
@@ -58,7 +58,7 @@ impl Archive {
                 Ok(Entries::TarLz4(entries))
             }
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarXz(archive) => {
                 let entries = archive.entries()?;
                 Ok(Entries::TarXz(entries))
@@ -98,7 +98,7 @@ pub enum Entries<'a> {
     #[doc(hidden)]
     TarLz4(tar::Entries<'a, Lz4Decoder<File>>),
 
-    #[cfg(all(feature = "xz2", feature = "tar"))]
+    #[cfg(all(feature = "liblzma", feature = "tar"))]
     #[doc(hidden)]
     TarXz(tar::Entries<'a, XzDecoder<File>>),
 
@@ -141,12 +141,12 @@ impl<'a> Iterator for Entries<'a> {
                 .next()
                 .map(|r| r.map(Entry::TarLz4).map_err(From::from)),
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarXz(entries) => entries
                 .next()
                 .map(|r| r.map(Entry::TarXz).map_err(From::from)),
 
-            #[cfg(all(feature = "xz2", feature = "tar"))]
+            #[cfg(all(feature = "liblzma", feature = "tar"))]
             Self::TarZstd(entries) => entries
                 .next()
                 .map(|r| r.map(Entry::TarZstd).map_err(From::from)),
