@@ -26,7 +26,7 @@ impl Archive {
     /// # Errors
     ///
     /// Returns an error if reading the archive fails.
-    pub fn entries(&mut self) -> Result<Entries> {
+    pub fn entries(&mut self) -> Result<Entries<'_>> {
         match self {
             #[cfg(feature = "tar")]
             Self::Tar(archive) => {

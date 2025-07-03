@@ -58,7 +58,7 @@ pub enum Entry<'a> {
     __Phantom(std::marker::PhantomData<&'a str>),
 }
 
-impl<'a> Entry<'a> {
+impl Entry<'_> {
     /// Returns the file type of this entry.
     pub fn entry_type(&self) -> EntryType {
         match self {
@@ -117,7 +117,7 @@ impl<'a> Entry<'a> {
     /// # Errors
     ///
     /// Parsing the path metadata.
-    pub fn path(&self) -> Result<Cow<Path>> {
+    pub fn path(&self) -> Result<Cow<'_, Path>> {
         match self {
             #[cfg(feature = "tar")]
             Self::Tar(entry) => entry.path().map_err(From::from),
