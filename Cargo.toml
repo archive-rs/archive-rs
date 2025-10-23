@@ -15,7 +15,7 @@ rust-version = "1.85"
 
 [dependencies]
 path-utils = "0.1"
-thiserror = "1"
+thiserror = "2"
 
 [dev-dependencies]
 anyhow = "1"
@@ -27,7 +27,7 @@ version = "4"
 optional = true
 
 [dependencies.bzip2]
-version = "0.4"
+version = "0.6"
 optional = true
 
 [dependencies.bzip2-rs]
