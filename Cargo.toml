@@ -19,7 +19,7 @@ thiserror = "1"
 
 [dev-dependencies]
 anyhow = "1"
-bytesize = "1"
+bytesize = "2"
 clap = "4"
 
 [dependencies.clap]
