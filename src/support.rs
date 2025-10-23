@@ -10,10 +10,7 @@ pub enum Format {
     /// tarball
     Tar,
 
-    #[cfg(all(
-        feature = "tar",
-        any(feature = "bzip2", feature = "bzip2-rs")
-    ))]
+    #[cfg(all(feature = "tar", any(feature = "bzip2", feature = "bzip2-rs")))]
     /// bzip2-compressed tarball
     TarBzip2,
 

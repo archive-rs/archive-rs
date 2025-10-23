@@ -10,7 +10,8 @@ homepage = "https://github.com/archive-rs/archive-rs"
 repository = "https://docs.rs/archive-rs"
 categories = ["compression", "encoding", "filesystem"]
 keywords = ["archive"]
-edition = "2021"
+edition = "2024"
+rust-version = "1.85"
 
 [dependencies]
 path-utils = "0.1"
