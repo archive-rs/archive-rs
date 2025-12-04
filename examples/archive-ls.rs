@@ -66,11 +66,7 @@ fn ls_entry(archive: &Path, entry: &Entry, config: Config) -> Result<()> {
 }
 
 fn humanized(bytes: u64) -> String {
-    ByteSize(bytes)
-        .to_string_as(true)
-        .replace("iB", "")
-        .replace(['B', ' '], "")
-        .to_uppercase()
+    ByteSize(bytes).display().iec_short().to_string()
 }
 
 fn args() -> ArgMatches {
